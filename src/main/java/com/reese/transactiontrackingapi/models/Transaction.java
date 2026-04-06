@@ -1,4 +1,4 @@
-package com.rhys.transactiontracker.model;
+package com.reese.transactiontrackingapi.models;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;

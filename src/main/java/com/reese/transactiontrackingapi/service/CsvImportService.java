@@ -1,7 +1,7 @@
-package com.rhys.transactiontracker.service;
+package com.reese.transactiontrackingapi.service;
 
-import com.rhys.transactiontracker.model.Transaction;
-import com.rhys.transactiontracker.repository.TransactionRepository;
+import com.reese.transactiontrackingapi.models.Transaction;
+import com.reese.transactiontrackingapi.repository.TransactionRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
