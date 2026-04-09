@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Tracking Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">TT</div>
+            <div>
+                <p class="eyebrow">Transaction Tracking API</p>
+                <h1>Finance Console</h1>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#overview" class="nav-link active">Overview</a>
+            <a href="#intake" class="nav-link">Intake</a>
+            <a href="#ledger" class="nav-link">Ledger</a>
+        </nav>
+
+        <div class="sidebar-card">
+            <p class="sidebar-label">Runtime</p>
+            <p class="sidebar-value">Spring Boot + H2</p>
+            <p class="sidebar-copy">A first-party frontend, served directly by your backend.</p>
+        </div>
+    </aside>
+
+    <main class="workspace">
+        <header class="hero" id="overview">
+            <div>
+                <p class="eyebrow">Command Center</p>
+                <h2>Track transactions with a quieter, sharper interface.</h2>
+                <p class="hero-copy">
+                    Import CSVs, add entries manually, and watch your running total update in a single view.
+                </p>
+            </div>
+            <div class="hero-status">
+                <span class="status-dot"></span>
+                <span>Live connection to `/transactions`</span>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <article class="stat-card">
+                <p class="stat-label">Total Balance</p>
+                <p class="stat-value" id="totalAmount">$0.00</p>
+                <p class="stat-footnote">Aggregated from all stored transactions</p>
+            </article>
+            <article class="stat-card">
+                <p class="stat-label">Records Loaded</p>
+                <p class="stat-value" id="transactionCount">0</p>
+                <p class="stat-footnote">Visible in the current ledger</p>
+            </article>
+            <article class="stat-card">
+                <p class="stat-label">Categories</p>
+                <p class="stat-value" id="categoryCount">0</p>
+                <p class="stat-footnote">Detected across your dataset</p>
+            </article>
+        </section>
+
+        <section class="panel-grid" id="intake">
+            <article class="panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Manual Entry</p>
+                        <h3>Add a transaction</h3>
+                    </div>
+                </div>
+
+                <form id="transactionForm" class="stack">
+                    <label>
+                        <span>Date</span>
+                        <input type="date" id="date" name="date" required>
+                    </label>
+                    <label>
+                        <span>Description</span>
+                        <input type="text" id="description" name="description" maxlength="120" placeholder="Coffee subscription" required>
+                    </label>
+                    <div class="dual-field">
+                        <label>
+                            <span>Amount</span>
+                            <input type="number" id="amount" name="amount" step="0.01" placeholder="-14.99" required>
+                        </label>
+                        <label>
+                            <span>Category</span>
+                            <input type="text" id="category" name="category" maxlength="60" placeholder="Software" required>
+                        </label>
+                    </div>
+                    <button type="submit" class="button-primary">Store Transaction</button>
+                </form>
+            </article>
+
+            <article class="panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Bulk Import</p>
+                        <h3>Upload a CSV</h3>
+                    </div>
+                </div>
+
+                <form id="importForm" class="stack">
+                    <label class="file-drop">
+                        <span>Select a CSV file</span>
+                        <input type="file" id="csvFile" name="file" accept=".csv,text/csv" required>
+                    </label>
+                    <button type="submit" class="button-secondary">Import Dataset</button>
+                </form>
+
+                <div class="terminal-card">
+                    <p class="terminal-label">Event Stream</p>
+                    <pre id="statusMessage">System ready. Waiting for the next action.</pre>
+                </div>
+            </article>
+        </section>
+
+        <section class="panel ledger-panel" id="ledger">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Ledger</p>
+                    <h3>Recent transactions</h3>
+                </div>
+                <button type="button" class="button-ghost" id="refreshButton">Refresh</button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="transactionTableBody">
+                    <tr class="empty-row">
+                        <td colspan="5">No transactions yet.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

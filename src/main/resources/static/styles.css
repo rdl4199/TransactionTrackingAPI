@@ -1,0 +1,417 @@
+:root {
+    --bg: #0a0d10;
+    --bg-elevated: rgba(16, 21, 27, 0.88);
+    --panel: rgba(15, 20, 25, 0.82);
+    --panel-strong: rgba(20, 26, 33, 0.95);
+    --border: rgba(148, 163, 184, 0.18);
+    --text: #edf2f7;
+    --muted: #95a3b8;
+    --accent: #78e6c6;
+    --accent-strong: #4fc8a7;
+    --danger: #f07b7b;
+    --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Space Grotesk", sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(120, 230, 198, 0.12), transparent 24rem),
+        radial-gradient(circle at bottom right, rgba(102, 153, 255, 0.12), transparent 28rem),
+        linear-gradient(160deg, #050608 0%, #0b0f13 48%, #0e1218 100%);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 95%);
+}
+
+.app-shell {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100vh;
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--border);
+    background: rgba(7, 10, 13, 0.9);
+    backdrop-filter: blur(18px);
+}
+
+.brand {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid rgba(120, 230, 198, 0.4);
+    border-radius: 0.9rem;
+    color: var(--accent);
+    background: linear-gradient(145deg, rgba(120, 230, 198, 0.12), rgba(255, 255, 255, 0.03));
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+}
+
+.eyebrow,
+.sidebar-label,
+.stat-label,
+.terminal-label {
+    margin: 0;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.74rem;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.brand h1,
+.hero h2,
+.panel h3 {
+    margin: 0.2rem 0 0;
+}
+
+.sidebar-nav {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.nav-link {
+    padding: 0.9rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.9rem;
+    color: var(--text);
+    text-decoration: none;
+    background: transparent;
+    transition: 180ms ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    border-color: rgba(120, 230, 198, 0.18);
+    background: rgba(120, 230, 198, 0.08);
+}
+
+.sidebar-card,
+.panel,
+.stat-card {
+    border: 1px solid var(--border);
+    border-radius: 1.4rem;
+    background: var(--panel);
+    box-shadow: var(--shadow);
+}
+
+.sidebar-card {
+    margin-top: auto;
+    padding: 1.2rem;
+}
+
+.sidebar-value {
+    margin: 0.5rem 0 0.3rem;
+    font-weight: 600;
+}
+
+.sidebar-copy,
+.hero-copy,
+.stat-footnote {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.workspace {
+    padding: 2rem;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: end;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 1.8rem;
+    background: linear-gradient(160deg, rgba(14, 18, 24, 0.95), rgba(17, 24, 31, 0.8));
+    box-shadow: var(--shadow);
+}
+
+.hero h2 {
+    max-width: 12ch;
+    font-size: clamp(2.4rem, 6vw, 4.7rem);
+    line-height: 0.96;
+}
+
+.hero-copy {
+    max-width: 42rem;
+    margin-top: 1rem;
+}
+
+.hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    align-self: start;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(120, 230, 198, 0.18);
+    border-radius: 999px;
+    background: rgba(120, 230, 198, 0.08);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+}
+
+.status-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 16px rgba(120, 230, 198, 0.6);
+}
+
+.stats-grid,
+.panel-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stat-card,
+.panel {
+    padding: 1.4rem;
+}
+
+.stat-value {
+    margin: 0.7rem 0 0.4rem;
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    font-weight: 700;
+}
+
+.panel-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.dual-field {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+label {
+    display: grid;
+    gap: 0.45rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 0.95rem;
+    background: rgba(4, 7, 10, 0.58);
+    color: var(--text);
+    font: inherit;
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: rgba(120, 230, 198, 0.5);
+    box-shadow: 0 0 0 4px rgba(120, 230, 198, 0.1);
+    transform: translateY(-1px);
+}
+
+.file-drop {
+    padding: 1rem;
+    border: 1px dashed rgba(120, 230, 198, 0.28);
+    border-radius: 1rem;
+    background: rgba(120, 230, 198, 0.05);
+}
+
+button {
+    cursor: pointer;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.9rem 1.25rem;
+    font: inherit;
+    font-weight: 600;
+    transition: transform 160ms ease, opacity 160ms ease, background 160ms ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.button-primary {
+    background: linear-gradient(120deg, var(--accent) 0%, #b8fff0 100%);
+    color: #05100d;
+}
+
+.button-secondary,
+.button-ghost {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.terminal-card {
+    margin-top: 1.2rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: rgba(5, 7, 9, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.terminal-card pre {
+    margin: 0.8rem 0 0;
+    white-space: pre-wrap;
+    color: #c6f8eb;
+    font-family: "IBM Plex Mono", monospace;
+    line-height: 1.6;
+}
+
+.ledger-panel {
+    margin-top: 1.5rem;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 1rem 0.85rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    text-align: left;
+}
+
+th {
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.amount-positive {
+    color: #93f5d8;
+}
+
+.amount-negative {
+    color: #ff9e9e;
+}
+
+.empty-row td {
+    color: var(--muted);
+    text-align: center;
+}
+
+.table-action {
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(240, 123, 123, 0.1);
+    color: #ffd0d0;
+    border: 1px solid rgba(240, 123, 123, 0.2);
+}
+
+@media (max-width: 1080px) {
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid,
+    .panel-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .workspace,
+    .sidebar {
+        padding: 1rem;
+    }
+
+    .hero {
+        padding: 1.25rem;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .dual-field {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card,
+    .panel {
+        padding: 1.1rem;
+    }
+
+    th,
+    td {
+        padding: 0.85rem 0.65rem;
+    }
+}
