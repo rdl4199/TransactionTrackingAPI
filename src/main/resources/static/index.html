@@ -22,6 +22,7 @@
 
         <nav class="sidebar-nav">
             <a href="#overview" class="nav-link active">Overview</a>
+            <a href="#summary" class="nav-link">Summary</a>
             <a href="#intake" class="nav-link">Intake</a>
             <a href="#ledger" class="nav-link">Ledger</a>
         </nav>
@@ -64,6 +65,36 @@
                 <p class="stat-value" id="categoryCount">0</p>
                 <p class="stat-footnote">Detected across your dataset</p>
             </article>
+        </section>
+
+        <section class="panel summary-panel" id="summary">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Summary</p>
+                    <h3>Generate a transaction summary</h3>
+                </div>
+                <button type="button" class="button-secondary" id="summaryButton">Generate Summary</button>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-metric">
+                    <span class="summary-key">Income</span>
+                    <strong id="incomeTotal">$0.00</strong>
+                </div>
+                <div class="summary-metric">
+                    <span class="summary-key">Expenses</span>
+                    <strong id="expenseTotal">$0.00</strong>
+                </div>
+                <div class="summary-metric">
+                    <span class="summary-key">Top Category</span>
+                    <strong id="topCategory">No category data</strong>
+                </div>
+            </div>
+
+            <div class="terminal-card summary-output">
+                <p class="terminal-label">Summary Output</p>
+                <pre id="summaryText">Request a summary to see your current transaction breakdown.</pre>
+            </div>
         </section>
 
         <section class="panel-grid" id="intake">

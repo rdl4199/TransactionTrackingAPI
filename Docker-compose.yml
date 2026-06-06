@@ -1,8 +1,16 @@
-version: "3.8"
-
 services:
   transaction-tracker:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: transaction-tracker
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:transactionsdb
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD:
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
       - "8080:8080"
+    restart: unless-stopped

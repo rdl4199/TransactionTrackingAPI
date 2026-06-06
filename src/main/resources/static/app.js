@@ -6,10 +6,15 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 const transactionForm = document.getElementById("transactionForm");
 const importForm = document.getElementById("importForm");
 const refreshButton = document.getElementById("refreshButton");
+const summaryButton = document.getElementById("summaryButton");
 const statusMessage = document.getElementById("statusMessage");
 const totalAmount = document.getElementById("totalAmount");
 const transactionCount = document.getElementById("transactionCount");
 const categoryCount = document.getElementById("categoryCount");
+const incomeTotal = document.getElementById("incomeTotal");
+const expenseTotal = document.getElementById("expenseTotal");
+const topCategory = document.getElementById("topCategory");
+const summaryText = document.getElementById("summaryText");
 const transactionTableBody = document.getElementById("transactionTableBody");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -95,11 +100,30 @@ refreshButton.addEventListener("click", () => {
     refreshDashboard();
 });
 
+summaryButton.addEventListener("click", async () => {
+    summaryButton.disabled = true;
+
+    try {
+        const response = await fetch("/transactions/summary");
+        if (!response.ok) {
+            throw new Error("Could not generate transaction summary.");
+        }
+
+        const summary = await response.json();
+        renderSummary(summary);
+        setStatus("Transaction summary generated.");
+    } catch (error) {
+        setStatus(error.message, true);
+    } finally {
+        summaryButton.disabled = false;
+    }
+});
+
 async function refreshDashboard() {
     try {
         const [transactionsResponse, summaryResponse] = await Promise.all([
             fetch("/transactions"),
-            fetch("/transactions/summary/total")
+            fetch("/transactions/summary")
         ]);
 
         if (!transactionsResponse.ok || !summaryResponse.ok) {
@@ -111,6 +135,7 @@ async function refreshDashboard() {
 
         renderTransactions(transactions);
         renderStats(transactions, summary.total);
+        renderSummary(summary);
         setStatus(`Loaded ${transactions.length} transaction${transactions.length === 1 ? "" : "s"}.`);
     } catch (error) {
         setStatus(error.message, true);
@@ -165,6 +190,13 @@ function renderTransactions(transactions) {
     for (const button of transactionTableBody.querySelectorAll("[data-id]")) {
         button.addEventListener("click", () => deleteTransaction(button.dataset.id));
     }
+}
+
+function renderSummary(summary) {
+    incomeTotal.textContent = currencyFormatter.format(Number(summary.incomeTotal || 0));
+    expenseTotal.textContent = currencyFormatter.format(Number(summary.expenseTotal || 0));
+    topCategory.textContent = summary.topCategory || "No category data";
+    summaryText.textContent = summary.summaryText || "No summary available.";
 }
 
 async function deleteTransaction(id) {

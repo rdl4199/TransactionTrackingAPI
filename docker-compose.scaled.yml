@@ -1,0 +1,68 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: transaction-tracker-postgres
+    environment:
+      POSTGRES_DB: transactionsdb
+      POSTGRES_USER: transaction_user
+      POSTGRES_PASSWORD: transaction_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U transaction_user -d transactionsdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  transaction-tracker-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: transaction-tracker-1
+    environment: &app-env
+      SPRING_PROFILES_ACTIVE: aws
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/transactionsdb
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCE_USERNAME: transaction_user
+      SPRING_DATASOURCE_PASSWORD: transaction_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  transaction-tracker-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: transaction-tracker-2
+    environment: *app-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  transaction-tracker-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: transaction-tracker-3
+    environment: *app-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  load-balancer:
+    image: nginx:1.27-alpine
+    container_name: transaction-tracker-load-balancer
+    depends_on:
+      - transaction-tracker-1
+      - transaction-tracker-2
+      - transaction-tracker-3
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+
+volumes:
+  postgres-data:

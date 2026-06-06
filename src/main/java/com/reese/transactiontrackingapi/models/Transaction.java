@@ -1,6 +1,10 @@
 package com.reese.transactiontrackingapi.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -12,9 +16,21 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Date is required")
+    @Column(nullable = false)
     private LocalDate date;
+
+    @NotBlank(message = "Description is required")
+    @Column(nullable = false, length = 120)
     private String description;
+
+    @NotNull(message = "Amount is required")
+    @DecimalMin(value = "-999999999.99", message = "Amount is too small")
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
+
+    @NotBlank(message = "Category is required")
+    @Column(nullable = false, length = 60)
     private String category;
 
     public Transaction() {

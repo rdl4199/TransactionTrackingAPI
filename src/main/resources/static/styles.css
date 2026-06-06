@@ -220,6 +220,41 @@ body::before {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.summary-panel {
+    margin-top: 1.5rem;
+}
+
+.summary-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.summary-metric {
+    padding: 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-radius: 1rem;
+    background: rgba(4, 7, 10, 0.45);
+}
+
+.summary-key {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.summary-metric strong {
+    font-size: 1.15rem;
+}
+
+.summary-output {
+    margin-top: 1rem;
+}
+
 .panel-header {
     display: flex;
     justify-content: space-between;
@@ -384,7 +419,8 @@ tbody tr:hover {
     }
 
     .stats-grid,
-    .panel-grid {
+    .panel-grid,
+    .summary-grid {
         grid-template-columns: 1fr;
     }
 }

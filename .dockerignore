@@ -3,3 +3,6 @@ target
 .idea
 .vscode
 *.iml
+Docker-compose*.yml
+docker-compose*.yml
+AWS-DEPLOYMENT.md
